@@ -22,16 +22,20 @@
   <div class="container">
         <div class="card mt-2">
         <div class="card-header bg-primary">
+       
             <br>
             <span class="text-light"><h1><center>BUSCAR HEROES</center></h1></span>
             <br>
             </div>
         </div>
+        <div class="mb-3">
+
+        </div>
         <br>
         <hr>
         <br>
         <div class="card-body">
-          <form action="" method="POST" id="formbusqueda" autocomplete="off">
+          <form action="">
             <div class="mb-3">
               <label for=""clas="form-label">Publicher:</label>
               <br>
@@ -39,6 +43,22 @@
               <select select name="" id="publicher" class="form-control" required>
                 <option value="">Selecicione ....</option>
               </select>
+            </div>
+            <div class="mb-3">
+            <table border='1' class='table table-hover'>
+              <thead>
+                <tr>
+                <th>ID_Hero</th>
+                <th>Nombre_Heroe</th>
+                <th>Nombre_Persona</th>
+                <th>Genero</th>
+                <th>Raza</th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
+
+              </tbody>
+            </table>
             </div>
           </form>
 
@@ -67,7 +87,57 @@
                 console.error(e)
           })
         })();
+        
+        const tbody = $("tbody");
+        $("#publicher").addEventListener("change", (event) => {
+                Seleccion = event.target.value;
+                if (Seleccion != "") {
+                    const parameters = new FormData();
+                    parameters.append("operacion", "BuscarPublicher");
+                    parameters.append("publisher_id", Seleccion)
+            fetch("../controllers/publisher.controlller.php", {
+              method: "POST",
+              body: parameters
+            })
+            .then(respuesta => respuesta.json())
+            .then(datos =>{
 
+              datos.forEach(element => {
+
+                const tr = document.createElement("tr");
+
+              const ID_Hero = document.createElement("td");
+              ID_Hero.textContent = element.id;
+              tr.appendChild(ID_Hero)
+
+              const Nombre_Heroe = document.createElement("td");
+              Nombre_Heroe.textContent = element.superhero_name;
+              tr.appendChild(Nombre_Heroe)
+
+              const Nombre_Persona = document.createElement("td");
+              Nombre_Persona.textContent = element.full_name;
+              tr.appendChild(Nombre_Persona)
+              
+              const Genero = document.createElement("td");
+              Genero.textContent = element.gender;
+              tr.appendChild(Genero)
+
+              const Raza = document.createElement("tr");
+              Raza.textContent = element.race;
+              tr.appendChild(Raza)
+
+              tbody.appendChild(tr);
+              })
+
+
+
+            })
+            
+            
+          
+          }
+        })
+      
 
     })
   </script>

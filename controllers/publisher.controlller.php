@@ -11,4 +11,17 @@ if(isset($_GET['operacion'])){
         echo json_encode($resultado);
     }
 }
+
+if(isset($_POST['operacion'])){
+
+    $publisher = new Publisher();
+
+    if($_POST['operacion'] == 'BuscarPublicher') {
+        $resultado = $publisher->ObtenerHeroePuclisher(["publisher_id" => $_POST['publisher_id']]);
+        echo json_encode($resultado);
+    }
+    if($_POST['operacion'] == 'AlinearPuclisher') {
+        $resultado = $publisher->heroPublicher(["publisher_id" => $_POST['publisher_id']]);
+    }
+}
 ?>

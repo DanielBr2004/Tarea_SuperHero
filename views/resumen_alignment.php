@@ -71,8 +71,8 @@
     fetch(`../controllers/alignments.php?operacion=getresumenAlignment`)
     .then(Respuesta => Respuesta.json())
     .then(datos => {
-      grafico.data.labels = datos.map(registro => registro.alignment_id)
-      grafico.data.datasets[0].data = datos.map(registro => registro.total)
+      grafico.data.labels = datos.map(registro => registro.Bando)
+      grafico.data.datasets[0].data = datos.map(registro => registro.Heroes)
       grafico.update()
     })
     .catch(e =>{
